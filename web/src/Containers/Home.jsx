@@ -45,11 +45,15 @@ class Home extends React.Component {
 					onPopup(true, 'success');
 				}
 			});
+		} else {
+			onPopup(true, 'error');
 		}
 	}
 
 	render() {
 		const { otherTasks, myTasks } = this.state;
+		console.log(otherTasks);
+		console.log(myTasks);
 		return (
 			<div className="content">
 				<div className="title title_group">

@@ -17,6 +17,15 @@ class Popup extends React.Component {
 						</div>
 					</div>
 				)}
+				{showPopup.current === 'success' && (
+					<div className="popup">
+						<div className="popup_close_panel" onClick={() => { onPopup(false, null); }} />
+						<div className="popup_content">
+							<div className="title">Error</div>
+							<div className="title">Fill in all the fields</div>
+						</div>
+					</div>
+				)}
 			</>
 		);
 	}

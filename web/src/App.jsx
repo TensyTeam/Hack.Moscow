@@ -3,23 +3,38 @@ import {
 	BrowserRouter, Route, Switch, Redirect,
 } from 'react-router-dom';
 
-import Home from './Containers/Home.jsx';
-import Profile from './Containers/Profile.jsx';
-import Popup from './Containers/Popup.jsx';
 
-import Header from './Components/Header/Header.jsx';
+import Home from './Containers/Home.jsx';
+import Popup from './Containers/Popup.jsx';
 import Footer from './Components/Footer/Footer.jsx';
+
+import { socketIo } from './Functions/api';
 
 
 export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			token: [],
 			showPopup: { active: false, current: null },
 			redirect: { status: false, path: '/' },
 		};
 		this.onPopup = this.onPopup.bind(this);
 		this.onRedirect = this.onRedirect.bind(this);
+	}
+
+	componentWillMount() {
+		if (localStorage.getItem('token') !== null) {
+			this.setState({ token: JSON.parse(localStorage.getItem('token')) });
+		} else {
+			const token = { token: '123' };
+			localStorage.setItem('token', JSON.stringify(token));
+		}
+
+		setInterval(() => {
+			const { token } = this.state;
+			socketIo.emit('online', { token });
+		}, 5000);
 	}
 
 	onPopup(_active, _current) {
@@ -54,12 +69,6 @@ export default class App extends React.Component {
 						)}
 						<Route exact path="/">
 							<Home
-								onPopup={this.onPopup}
-								onRedirect={this.onRedirect}
-							/>
-						</Route>
-						<Route exact path="/profile">
-							<Profile
 								onPopup={this.onPopup}
 								onRedirect={this.onRedirect}
 							/>
