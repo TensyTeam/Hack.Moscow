@@ -46,14 +46,17 @@ class Home extends React.Component {
 
 		socketIo.on('tasks_del', (mes) => {
 			console.log('tasks_del', mes);
-			const { tasks } = this.state;
-			for (let m = 0; m < tasks.length; m += 1) {
-				for (let n = 0; n < mes.length; n += 1) {
-					if (tasks[m].id === mes[n].id) {
-						tasks.splice(m, 1);
+			let { tasks } = this.state;
+			for (let m = 0; m < mes.length; m += 1) {
+				if (mes[m].user !== token) {
+					let t = true;
+					for (let n = 0; n < tasks.length; n += 1) {
+						if (mes[m].id === tasks[n].id) {
+							t = false;
+						}
 					}
-					if (tasks[m].user === token) {
-						tasks.splice(m, 1);
+					if (t) {
+						tasks = tasks.concat(mes[m]);
 					}
 				}
 			}

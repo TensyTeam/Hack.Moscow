@@ -13,10 +13,11 @@ class Space extends React.Component {
 				type: document.location.search.split('=')[1],
 			},
 			position: document.location.search.split('=')[1],
-			arrayStudy: [],
+			arrayMessages: [],
 		};
 		this.onReload = this.onReload.bind(this);
 		this.onSendMessage = this.onSendMessage.bind(this);
+		this.handleKeyPress = this.handleKeyPress.bind(this);
 
 		const stun = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
 		this.peer = new RTCPeerConnection(stun);
@@ -41,13 +42,12 @@ class Space extends React.Component {
 	componentWillMount() {
 		// ожидание входящего сообщения
 		socketIo.on('message_get', (mes) => {
+			console.log(mes);
 			const { path } = this.state;
 			if (mes.space === path.room) {
-				const { arrayStudy } = this.state;
-				arrayStudy.space.messages.push(mes);
-				this.setState({ arrayStudy });
-				const chat = document.getElementById('chat');
-				chat.scrollTop = chat.scrollHeight;
+				const { arrayMessages } = this.state;
+				arrayMessages.push(mes);
+				this.setState({ arrayMessages });
 			}
 		});
 		this.onReload();
@@ -61,6 +61,7 @@ class Space extends React.Component {
             document.getElementById('message_field').value = '';
             // отправка исходящего сообщения
             socketIo.emit('message_send', {
+				token: JSON.parse(localStorage.getItem('token')),
                 space: path.room,
                 cont: message,
             });
@@ -162,8 +163,6 @@ class Space extends React.Component {
 
 	connect() {
 		this.peer.setRemoteDescription(this.description2);
-		document.getElementById('connect').classList.remove('fa-error');
-		document.getElementById('connect').classList.add('fa-success');
 	}
 
 	answer() {
@@ -198,29 +197,25 @@ class Space extends React.Component {
 		};
 	}
 
+	handleKeyPress(event) {
+		if (event.key === 'Enter') {
+			this.onSendMessage();
+		}
+	}
+
 	render() {
 		const {
-			position, arrayStudy,
+			arrayMessages,
 		} = this.state;
 		const { user } = this.props;
+		console.log(arrayMessages);
 		return (
 			<div id="space">
 				<div className="chat_block" id="chat">
-					<div className="chat_header_block">
-						<div className="chat_header_scroll">
-							{(position === 'student' || position === 'bot') && (
-								<div className="chat_control chat_control_red" onClick={() => { this.onLocalPopup(true, 'assessment'); }}>
-									<div className="icon">
-											Finish
-									</div>
-								</div>
-							)}
-						</div>
-					</div>
 					<div className="chat_content">
-						{arrayStudy.length !== 0 && arrayStudy.space.messages.map((message) => (
+						{arrayMessages.length !== 0 && arrayMessages.map((message) => (
 							<div key={message.time}>
-								{message.user === user.id ? (
+								{message.user === JSON.parse(localStorage.getItem('token')) ? (
 									<div className="my_message">
 										<div className="message_content">
 											{message.cont}
@@ -239,7 +234,7 @@ class Space extends React.Component {
 						))}
 					</div>
 					<div className="chat_bottom">
-						<input type="text" id="message_field" />
+						<input type="text" id="message_field" onKeyPress={(event) => { this.handleKeyPress(event); }} />
 						<div className="btn" onClick={() => { this.onSendMessage(); }}>Send</div>
 					</div>
 				</div>
