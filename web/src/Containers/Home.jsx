@@ -17,6 +17,7 @@ class Home extends React.Component {
 	}
 
 	componentWillMount() {
+		const { token } = this.props;
 		getTasks(this).then((res) => {
 			if (res.error === 0) {
 				this.setState({ tasks: res.result.tasks });
@@ -30,7 +31,9 @@ class Home extends React.Component {
 				for (let n = 0; n < mes.length; n += 1) {
 					if (tasks[m].id === mes[n].id) {
 						tasks.splice(m, 1);
-						// break;
+					}
+					if (tasks[m].user === token) {
+						tasks.splice(m, 1);
 					}
 				}
 			}
@@ -44,7 +47,9 @@ class Home extends React.Component {
 				for (let n = 0; n < mes.length; n += 1) {
 					if (tasks[m].id === mes[n].id) {
 						tasks.splice(m, 1);
-						// break;
+					}
+					if (tasks[m].user === token) {
+						tasks.splice(m, 1);
 					}
 				}
 			}
