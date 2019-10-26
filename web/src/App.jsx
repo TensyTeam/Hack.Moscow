@@ -34,7 +34,7 @@ export default class App extends React.Component {
 			localStorage.setItem('token', JSON.stringify(tokenTemp));
 		}
 
-		socketIo.emit('online', { tokenTemp });
+		socketIo.emit('online', { token: tokenTemp });
 		setInterval(() => {
 			const { token } = this.state;
 			socketIo.emit('online', { token });
