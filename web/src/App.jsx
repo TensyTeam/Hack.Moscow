@@ -41,6 +41,7 @@ export default class App extends React.Component {
 		}, 5000);
 
 		socketIo.on('student_accept', (mes) => {
+			console.log('student_accept', mes);
 			if (mes.token === JSON.parse(localStorage.getItem('token'))) {
 				this.onRedirect(`/space/${mes.id}/?type=student`);
 			}

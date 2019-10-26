@@ -53,8 +53,9 @@ class Home extends React.Component {
 	}
 
 	onCallTask(_taskId) {
-		startStudy(this, { id: _taskId }).then((res) => {
-			if (res.error === 0) {
+		startStudy(this, { id: _taskId }).then((mes) => {
+			console.log('startStudy', mes);
+			if (mes.error === 0) {
 				this.onRedirect(`/space/${_taskId}/?type=teacher`);
 			}
         });
