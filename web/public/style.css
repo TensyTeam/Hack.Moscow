@@ -21,6 +21,10 @@ body {
     background: #f5f6fa;
 }
 
+body>iframe {
+    display: none;
+}
+
 a {
     text-decoration: none;
     color: #34495e;
