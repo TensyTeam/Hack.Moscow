@@ -1,8 +1,4 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
-
-import Input from '../Components/UI/Input/Input.jsx';
-import Button from '../Components/UI/Button/Button.jsx';
 
 
 class Popup extends React.Component {
@@ -16,8 +12,8 @@ class Popup extends React.Component {
 					<div className="popup">
 						<div className="popup_close_panel" onClick={() => { onPopup(false, null); }} />
 						<div className="popup_content">
-							<div className="title">Успешно</div>
-							<div className="title">Ваш вопрос опубликован</div>
+							<div className="title">Success</div>
+							<div className="title">Your task has been published</div>
 						</div>
 					</div>
 				)}
