@@ -58,17 +58,17 @@ class Home extends React.Component {
 	}
 
 	onCallTask(_taskId) {
+		const { onRedirect } = this.props;
 		startStudy(this, { id: _taskId }).then((mes) => {
 			console.log('startStudy', mes);
 			if (mes.error === 0) {
-				this.onRedirect(`/space/${_taskId}/?type=teacher`);
+				onRedirect(`/space/${mes.result.id}/?type=teacher`);
 			}
         });
 	}
 
 	render() {
 		const { tasks } = this.state;
-		console.log(tasks);
 		return (
 			<div className="content">
 				<div className="title title_group">

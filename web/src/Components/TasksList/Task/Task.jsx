@@ -10,7 +10,7 @@ const Task = (props) => {
 		task, onCallTask,
 	} = props;
 	return (
-		<Link to={`card/${task.id}`} className="task" key={task.id} onClick={() => { onCallTask(task.id); }}>
+		<div className="task" key={task.id} onClick={() => { onCallTask(task.id); }}>
 			<div className="task_left">
 				<img src={task.image} alt="" />
 			</div>
@@ -27,7 +27,7 @@ const Task = (props) => {
 					{task.user}
 				</div>
 			</div>
-		</Link>
+		</div>
 	);
 };
 

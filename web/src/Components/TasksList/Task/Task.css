@@ -5,6 +5,7 @@
     display: flex;
     position: relative;
     margin: 10px 0;
+    flex-direction: column;
 }
 
 .task_left {
@@ -13,7 +14,7 @@
 }
 
 .task_left img {
-    width: 300px;
+    width: 100%;
     height: auto;
 }
 
@@ -21,7 +22,6 @@
     display: flex;
     padding: 20px;
     flex-direction: column;
-    width: 100%;
 }
 
 .task_title {
@@ -47,8 +47,11 @@
     position: absolute;
     top: 0;
     right: 0;
-    padding: 10px 15px;
-    color: #dadada;
+    padding: 5px 10px;
+    margin: 5px;
+    color: #3f3456;
+    background: #fff;
+    border-radius: 8px;
 }
 
 .task_user {

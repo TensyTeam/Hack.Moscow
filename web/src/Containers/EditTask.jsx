@@ -82,7 +82,6 @@ class EditTask extends React.Component {
 
 	render() {
 		const { newTask, responce } = this.state;
-		console.log(newTask);
 		return (
 			<div className="content">
 				<div className="title title_group">
@@ -122,7 +121,7 @@ class EditTask extends React.Component {
 						<i className="fas fa-file-upload" />
 						<span>Upload img</span>
 					</label>
-					<Button onClick={responce ? '' : this.onCreateTask}>
+					<Button onClick={responce ? {} : this.onCreateTask}>
 						Create
 					</Button>
 				</div>
