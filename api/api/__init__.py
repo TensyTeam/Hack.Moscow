@@ -1,17 +1,16 @@
-import api.tasks as tasks
-import api.study as study
-
-import api._error as Error
-
 import time
 
+
 from mongodb import db
-from api._error import ErrorWrong
-from api._func import get_language
+import api.tasks as tasks
+import api.study as study
+import api._error as ErrorWrong
+
 
 
 class API():
 	def __init__(self, server, socketio, token=None):
+		self.timestamp = time.time()
 		self.server = server
 		self.socketio = socketio
 		self.token = token
