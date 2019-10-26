@@ -5,7 +5,7 @@ import time
 import re
 
 from mongodb import db
-from api._func import get_preview
+from api._func import get_preview, next_id
 
 # Socket.IO
 
@@ -47,6 +47,52 @@ def online(x):
 		user['online'] = True
 		user['last'] = time.time()
 		db['users'].save(user)
+
+# Сообщения
+
+@sio.on('message_send', namespace='/main')
+def message(mes):
+	space = db['space'].find_one({'id': mes['space']})
+
+	timestamp = time.time()
+
+	message_id = next_id('space')
+
+	space['messages'].append({
+		'id': message_id,
+		'user': mes['token'],
+		'cont': mes['cont'],
+		'time': timestamp,
+	})
+	db['space'].save(space)
+
+	# Отправить сообщение
+
+	sio.emit('message_get', {
+		'space': mes['space'],
+		'id': message_id,
+		'user': mes['token'],
+		'cont': mes['cont'],
+		'time': timestamp,
+	}, namespace='/main')
+
+# Видеочат
+
+@sio.on('candidate1', namespace='/main')
+def candidate1(mes):
+	sio.emit('candidate1', mes, namespace='/main')
+
+@sio.on('description1', namespace='/main')
+def description1(mes):
+	sio.emit('description1', mes, namespace='/main')
+
+@sio.on('candidate2', namespace='/main')
+def candidate2(mes):
+	sio.emit('candidate2', mes, namespace='/main')
+
+@sio.on('description2', namespace='/main')
+def description2(mes):
+	sio.emit('description2', mes, namespace='/main')
 
 
 if __name__ == '__main__':
