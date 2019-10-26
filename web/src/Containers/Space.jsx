@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { socketIo } from '../Functions/api';
 import { dateFormat } from '../Functions/handle';
@@ -83,20 +84,24 @@ class Space extends React.Component {
 						this.sended++;
 						console.log(this.sended, this.yourCandidate);
 						console.log('!', this.sended);
-						socketIo.emit('candidate2', this.yourCandidate);
+						socketIo.emit('candidate2', { yourCandidate: this.yourCandidate, room: document.location.pathname.split('/')[2] });
 					}
 				}
 			};
 
 			socketIo.on('candidate1', (mes) => {
-				console.log('!cand1', mes);
-				this.peer.addIceCandidate(mes);
+				if (mes.room === document.location.pathname.split('/')[2]) {
+					console.log('!cand1', mes.yourCandidate);
+					this.peer.addIceCandidate(mes.yourCandidate);
+				}
 			});
 
 			socketIo.on('description1', (mes) => {
-				console.log('!desc1', mes);
-				this.description1 = mes;
-				this.answer();
+				if (mes.room === document.location.pathname.split('/')[2]) {
+					console.log('!desc1', mes.yourDescription);
+					this.description1 = mes.yourDescription;
+					this.answer();
+				}
 			});
 		} else if (position === 'teacher') {
 			this.peer.onicecandidate = (e) => {
@@ -107,7 +112,7 @@ class Space extends React.Component {
 						console.log(this.sended, this.yourCandidate);
 
 						console.log('!', this.sended);
-						socketIo.emit('candidate1', this.yourCandidate);
+						socketIo.emit('candidate1', { yourCandidate: this.yourCandidate, room: document.location.pathname.split('/')[2] });
 					}
 				}
 			}
@@ -116,14 +121,18 @@ class Space extends React.Component {
 			this.call();
 
 			socketIo.on('candidate2', (mes) => {
-				console.log('!cand2', mes);
-				this.peer.addIceCandidate(mes);
+				if (mes.room === document.location.pathname.split('/')[2]) {
+					console.log('!cand2', mes.yourCandidate);
+					this.peer.addIceCandidate(mes.yourCandidate);
+				}
 			});
 
 			socketIo.on('description2', (mes) => {
-				console.log('!desc2', mes);
-				this.description2 = mes;
-				this.connect();
+				if (mes.room === document.location.pathname.split('/')[2]) {
+					console.log('!desc2', mes.yourDescription);
+					this.description2 = mes.yourDescription;
+					this.connect();
+				}
 			});
 		}
 	}
@@ -150,7 +159,7 @@ class Space extends React.Component {
 				() => {
 					this.yourDescription = this.peer.localDescription;
 					if (this.yourDescription) {
-						socketIo.emit('description1', this.yourDescription);
+						socketIo.emit('description1', { yourDescription: this.yourDescription, room: document.location.pathname.split('/')[2] });
 					}
 				},
 			);
@@ -187,7 +196,7 @@ class Space extends React.Component {
 			this.peer.setLocalDescription(new RTCSessionDescription(answer)).then(() => {
 				this.yourDescription = this.peer.localDescription;
 				if (this.yourDescription) {
-					socketIo.emit('description2', this.yourDescription);
+					socketIo.emit('description2', { yourDescription: this.yourDescription, room: document.location.pathname.split('/')[2] });
 				}
 			});
 		});
@@ -207,11 +216,13 @@ class Space extends React.Component {
 		const {
 			arrayMessages,
 		} = this.state;
-		const { user } = this.props;
 		console.log(arrayMessages);
 		return (
 			<div id="space">
 				<div className="videochat_block" id="videochat">
+					<Link id="video_control" to="/">
+						<span>Go back</span>
+					</Link>
 					<div id="videos">
 						<video id="local" autoPlay controls />
 						<video id="remote" autoPlay controls />

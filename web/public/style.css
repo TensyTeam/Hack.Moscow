@@ -22,7 +22,7 @@ body {
 }
 
 body>iframe {
-    /* display: none; */
+    display: none;
 }
 
 a {
@@ -282,6 +282,18 @@ a {
     color: #dbdbdb;
     margin: 0 5px;
     font-size: 12px;
+}
+
+#video_control {
+    position: absolute;
+    left: 0;
+    border-radius: 6px;
+    z-index: 10;
+    top: 0;
+    padding: 10px;
+    margin: 10px;
+    background: #dadada;
+    color: #000;
 }
 
 @media (max-width: 700px) {
