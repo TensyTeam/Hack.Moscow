@@ -95,7 +95,7 @@ class EditTask extends React.Component {
 						onChange={(_e) => { this.handleNewTask(_e, null, 'tags'); }}
 					/>
 					<img id="task_cover_img" className="task_img" src="https://tensyteam.ru/static/ladders/0.png" alt="" />
-					<label className="btn btn-file" id="cover_btn" htmlFor="cover" style={responce && newTask.image === '' ? { border: '2px dashed #ff7979', color: '#ff7979' } : {}}>
+					<label className="btn btn-file" id="cover_btn" htmlFor="cover">
 						<Input
 							id="cover"
 							name="tags"

@@ -4,7 +4,7 @@ import api from './api';
 export function getTasks(that, data = {}) {
 	return new Promise((resolve) => {
 		const handlerSuccess = (other, res) => {
-			resolve(res.result.users);
+			resolve(res);
 		};
 
 		const handlerError = (other, res) => {

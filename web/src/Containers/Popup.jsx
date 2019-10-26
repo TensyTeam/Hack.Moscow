@@ -13,16 +13,16 @@ class Popup extends React.Component {
 						<div className="popup_close_panel" onClick={() => { onPopup(false, null); }} />
 						<div className="popup_content">
 							<div className="title">Success</div>
-							<div className="title">Your task has been published</div>
+							<div className="subtitle">Your task has been published</div>
 						</div>
 					</div>
 				)}
-				{showPopup.current === 'success' && (
+				{showPopup.current === 'error' && (
 					<div className="popup">
 						<div className="popup_close_panel" onClick={() => { onPopup(false, null); }} />
 						<div className="popup_content">
 							<div className="title">Error</div>
-							<div className="title">Fill in all the fields</div>
+							<div className="subtitle">Fill in all the fields</div>
 						</div>
 					</div>
 				)}

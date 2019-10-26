@@ -15,8 +15,10 @@ class Home extends React.Component {
 	}
 
 	componentWillMount() {
-		getTasks(this, { my: false }).then((res) => {
-			this.setState({ tasks: res });
+		getTasks(this).then((res) => {
+			if (res.error === 0) {
+				this.setState({ tasks: res.result.tasks });
+			}
         });
 	}
 

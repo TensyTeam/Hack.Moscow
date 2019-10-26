@@ -28,7 +28,7 @@ export default class App extends React.Component {
 		if (localStorage.getItem('token') !== null) {
 			this.setState({ token: JSON.parse(localStorage.getItem('token')) });
 		} else {
-			const token = { token: '123' };
+			const token = '123';
 			localStorage.setItem('token', JSON.stringify(token));
 		}
 
