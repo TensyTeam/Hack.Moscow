@@ -58,7 +58,7 @@ export default class App extends React.Component {
 
 	render() {
 		const {
-			showPopup, redirect,
+			showPopup, redirect, token,
 		} = this.state;
 		return (
 			<BrowserRouter>
@@ -80,6 +80,7 @@ export default class App extends React.Component {
 						)}
 						<Route exact path="/">
 							<Home
+								token={token}
 								onPopup={this.onPopup}
 								onRedirect={this.onRedirect}
 							/>

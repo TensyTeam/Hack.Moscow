@@ -67,7 +67,7 @@ class Home extends React.Component {
 		return (
 			<div className="content">
 				<div className="title title_group">
-					<span>Tasks</span>
+					<span>Online tasks</span>
 					<Link to="/create/task" className="btn">
 						<i className="fas fa-plus" />
 					</Link>
