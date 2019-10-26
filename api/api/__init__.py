@@ -23,28 +23,16 @@ class API():
 		}
 
 		if token:
-			user = db['users'].find_one({'token': token}, {'_id': False})
+			self.user = db['users'].find_one({'token': token})
 
-			if user:
+			if not self.user:
 				self.user = {
 					'token': token,
-					'admin': 3,
-					'tasks': user['tasks'],
-				}
-
-			else:
-				req = {
-					'token': token,
 					'tasks': [],
-				}
-
-				db['tasks'].insert_one(req)
-
-				self.user = {
-					'token': token,
 					'admin': 3,
-					'tasks': [],
 				}
+
+				db['users'].insert_one(self.user)
 
 
 	def method(self, name, params={}):
