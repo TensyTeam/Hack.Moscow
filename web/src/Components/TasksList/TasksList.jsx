@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Task from './Task/Task.jsx';
-import './TaskList.css';
+import './TasksList.css';
 
 
 const TasksList = (props) => {

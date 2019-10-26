@@ -1,6 +1,7 @@
 .header {
-    background: #6795fc;
+    background: #4084ec;
     border: 0;
+    color: #fff;
 }
 
 .header a {
@@ -12,7 +13,7 @@
     width: 90%;
     margin: auto;
     display: flex;
-    height: 70px;
+    height: 40px;
     justify-content: center;
     align-items: center;
 }
