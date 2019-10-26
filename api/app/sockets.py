@@ -23,7 +23,7 @@ def online(x):
 	with thread_lock:
 		if thread is None:
 			thread = sio.start_background_task(target=background_thread)
-	
+
 	user = db['users'].find_one({'token': x['token']})
 
 	if user:
@@ -31,9 +31,23 @@ def online(x):
 		user['last'] = time.time()
 		db['users'].save(user)
 
+		# Добавление онлайн заданий
+
+		db_condition = {
+			'id': {'$in': user['tasks']},
+		}
+
+		tasks = [i for i in db['tasks'].find(db_condition, {'_id': False}) if i]
+
+		sio.emit('tasks_add', tasks, namespace='/main')
+
 
 if __name__ == '__main__':
-	sio.run(app, debug=False, log_output=False)
+	sio.run(app)
+
+	# with thread_lock:
+	# 	if thread is None:
+	# 		thread = sio.start_background_task(target=background_thread)
 
 
 def background_thread():
@@ -45,7 +59,22 @@ def background_thread():
 		for user in db['users'].find({'last': {'$lt': timestamp - 10}}):
 			user['online'] = False
 			db['users'].save(user)
-		
+
+			# Удаление онлайн заданий
+
+			db_condition = {
+				'id': {'$in': user['tasks']},
+			}
+
+			db_filter = {
+				'_id': False,
+				'id': True,
+			}
+
+			tasks = [i for i in db['tasks'].find(db_condition, db_filter) if i]
+
+			sio.emit('tasks_del', tasks, namespace='/main')
+
 		#
-		
+
 		time.sleep(5)
