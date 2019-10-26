@@ -3,11 +3,11 @@ import './Input.css';
 
 const Input = (props) => {
     const {
-        onClick, name, id, type, onChange, disabled, className, required, defaultValue, style, placeholder,
+        onClick, name, id, type, onChange, disabled, className, required, value, style, placeholder,
     } = props;
     return (
 	<input
-        id={id}
+		id={id}
 		name={name}
 		type={type}
 		onClick={onClick}
@@ -15,7 +15,7 @@ const Input = (props) => {
 		className={className}
 		disabled={disabled}
 		required={required}
-		defaultValue={defaultValue}
+		value={value}
 		style={style}
 		placeholder={placeholder}
 	/>

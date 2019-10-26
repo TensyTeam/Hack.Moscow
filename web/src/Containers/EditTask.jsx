@@ -46,6 +46,7 @@ class EditTask extends React.Component {
 							tags: [],
 						},
 					});
+					document.getElementById('task_cover_img').src = '';
 					onPopup(true, 'success');
 				}
 			});
@@ -95,7 +96,7 @@ class EditTask extends React.Component {
 						name="text"
 						type="text"
 						placeholder="For text"
-						defaultValue={newTask.text}
+						value={newTask.text}
 						style={responce && newTask.text.length === 0 ? { background: '#ff7979' } : {}}
 						onChange={(_e) => { this.handleNewTask(_e, null, 'text'); }}
 					/>
@@ -103,7 +104,7 @@ class EditTask extends React.Component {
 						name="tags"
 						type="text"
 						placeholder="For tags"
-						defaultValue={newTask.tags}
+						value={newTask.tags}
 						style={responce && newTask.tags.length === 0 ? { background: '#ff7979' } : {}}
 						onChange={(_e) => { this.handleNewTask(_e, null, 'tags'); }}
 					/>
@@ -111,18 +112,17 @@ class EditTask extends React.Component {
 					<label className="btn btn-file" id="cover_btn" htmlFor="cover">
 						<Input
 							id="cover"
-							name="tags"
+							name="image"
 							type="file"
 							className="input-file"
-							placeholder="For tags"
-							defaultValue={newTask.tags}
-							style={responce && newTask.tags.length === 0 ? { background: '#ff7979' } : {}}
+							placeholder="For image"
+							defaultValue={newTask.image}
 							onChange={(_e) => { this.handleNewTask(_e, null, 'image'); }}
 						/>
 						<i className="fas fa-file-upload" />
 						<span>Upload img</span>
 					</label>
-					<Button onClick={this.onCreateTask}>
+					<Button onClick={responce ? '' : this.onCreateTask}>
 						Create
 					</Button>
 				</div>
