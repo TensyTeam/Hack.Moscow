@@ -296,7 +296,7 @@ a {
     color: #000;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
     .chat_block {
         width: 100vw;
     }
