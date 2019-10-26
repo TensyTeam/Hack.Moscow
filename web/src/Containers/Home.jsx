@@ -21,6 +21,7 @@ class Home extends React.Component {
 	componentWillMount() {
 		const { token } = this.props;
 		getTasks(this).then((res) => {
+			console.log(res);
 			if (res.error === 0) {
 				this.setState({ responce: true });
 				this.setState({ tasks: res.result.tasks });

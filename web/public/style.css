@@ -22,7 +22,7 @@ body {
 }
 
 body>iframe {
-    display: none;
+    /* display: none; */
 }
 
 a {
@@ -201,7 +201,7 @@ a {
     z-index: 20;
     bottom: 10px;
     width: 300px;
-    right: 10px;
+    left: 10px;
     background: #ccc;
     border-radius: 5px;
     /* transform: rotateY(180deg); */

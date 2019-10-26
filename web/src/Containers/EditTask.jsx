@@ -35,6 +35,7 @@ class EditTask extends React.Component {
 				arrayOutput.image = image;
 				arrayOutput.file = file;
 			}
+			onPopup(true, 'loader');
 			editTasks(this, arrayOutput).then((res) => {
 				this.setState({ responce: false });
 				if (res.error === 0) {

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Loader from '../Components/UI/Loader/Loader.jsx';
+
 
 class Popup extends React.Component {
 	render() {
@@ -23,6 +25,14 @@ class Popup extends React.Component {
 						<div className="popup_content">
 							<div className="title">Error</div>
 							<div className="subtitle">Fill in all the fields</div>
+						</div>
+					</div>
+				)}
+				{showPopup.current === 'loader' && (
+					<div className="popup">
+						<div className="popup_close_panel" onClick={() => { onPopup(false, null); }} />
+						<div className="popup_content">
+							<Loader />
 						</div>
 					</div>
 				)}
