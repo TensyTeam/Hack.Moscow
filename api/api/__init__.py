@@ -3,8 +3,8 @@ import time
 
 from mongodb import db
 import api.tasks as tasks
-import api.study as study
-import api._error as ErrorWrong
+# import api.study as study
+import api._error as Error
 
 
 
@@ -60,7 +60,7 @@ class API():
 			module, method = name.split('.')
 			func = getattr(globals()[module], method)
 		except:
-			raise ErrorWrong('method')
+			raise Error.ErrorWrong('method')
 		
 		# Запрос
 
