@@ -13,6 +13,7 @@ class Home extends React.Component {
 		super(props);
 		this.state = {
 			tasks: [],
+			responce: false,
 		};
 		this.onCallTask = this.onCallTask.bind(this);
 	}
@@ -21,6 +22,7 @@ class Home extends React.Component {
 		const { token } = this.props;
 		getTasks(this).then((res) => {
 			if (res.error === 0) {
+				this.setState({ responce: true });
 				this.setState({ tasks: res.result.tasks });
 			}
         });
@@ -75,7 +77,7 @@ class Home extends React.Component {
 	}
 
 	render() {
-		const { tasks } = this.state;
+		const { tasks, responce } = this.state;
 		return (
 			<div className="content">
 				<div className="title title_group">
@@ -90,7 +92,13 @@ class Home extends React.Component {
 						onCallTask={this.onCallTask}
 					/>
 				) : (
-					<Loader />
+					<>
+						{responce ? (
+							<div style={{ textAlign: 'center' }}>Not found</div>
+						) : (
+							<Loader />
+						)}
+					</>
 				)}
 			</div>
 		);
