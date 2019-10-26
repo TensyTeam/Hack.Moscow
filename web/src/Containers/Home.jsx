@@ -27,9 +27,9 @@ class Home extends React.Component {
 
 		socketIo.on('tasks_add', (mes) => {
 			console.log('tasks_add', mes);
-			const { tasks } = this.state;
+			let { tasks } = this.state;
 			for (let m = 0; m < mes.length; m += 1) {
-				if (tasks[m].user !== token) {
+				if (mes[m].user !== token) {
 					let t = true;
 					for (let n = 0; n < tasks.length; n += 1) {
 						if (mes[m].id === tasks[n].id) {
@@ -37,7 +37,7 @@ class Home extends React.Component {
 						}
 					}
 					if (t) {
-						tasks.concat(mes[m]);
+						tasks = tasks.concat(mes[m]);
 					}
 				}
 			}
