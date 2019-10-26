@@ -14,6 +14,7 @@ class Home extends React.Component {
 		this.state = {
 			tasks: [],
 		};
+		this.onCallTask = this.onCallTask.bind(this);
 	}
 
 	componentWillMount() {
@@ -27,17 +28,20 @@ class Home extends React.Component {
 		socketIo.on('tasks_add', (mes) => {
 			console.log('tasks_add', mes);
 			const { tasks } = this.state;
-			for (let m = 0; m < tasks.length; m += 1) {
-				for (let n = 0; n < mes.length; n += 1) {
-					if (tasks[m].id === mes[n].id) {
-						tasks.splice(m, 1);
+			for (let m = 0; m < mes.length; m += 1) {
+				if (tasks[m].user !== token) {
+					let t = true;
+					for (let n = 0; n < tasks.length; n += 1) {
+						if (mes[m].id === tasks[n].id) {
+							t = false;
+						}
 					}
-					if (tasks[m].user === token) {
-						tasks.splice(m, 1);
+					if (t) {
+						tasks.concat(mes[m]);
 					}
 				}
 			}
-			this.setState({ tasks: tasks.concat(mes) });
+			this.setState({ tasks });
 		});
 
 		socketIo.on('tasks_del', (mes) => {

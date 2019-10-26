@@ -6,6 +6,7 @@ import {
 
 import Home from './Containers/Home.jsx';
 import EditTask from './Containers/EditTask.jsx';
+import Space from './Containers/Space.jsx';
 import Popup from './Containers/Popup.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 
@@ -42,7 +43,7 @@ export default class App extends React.Component {
 
 		socketIo.on('student_accept', (mes) => {
 			console.log('student_accept', mes);
-			if (mes.token === JSON.parse(localStorage.getItem('token'))) {
+			if (mes.user === JSON.parse(localStorage.getItem('token'))) {
 				this.onRedirect(`/space/${mes.id}/?type=student`);
 			}
 		});
@@ -93,6 +94,12 @@ export default class App extends React.Component {
 						</Route>
 						<Route exact path="/create/task">
 							<EditTask
+								onPopup={this.onPopup}
+								onRedirect={this.onRedirect}
+							/>
+						</Route>
+						<Route path="/space">
+							<Space
 								onPopup={this.onPopup}
 								onRedirect={this.onRedirect}
 							/>

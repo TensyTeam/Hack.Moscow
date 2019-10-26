@@ -6,6 +6,7 @@
     position: relative;
     margin: 10px 0;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .task_left {

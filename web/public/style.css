@@ -183,3 +183,29 @@ a {
     top: 0;
     right: 0;
 }
+
+#videos {
+    width: 100%;
+    position: absolute;
+    height: calc(100vh - 70px);
+}
+
+#remote {
+    width: 100%;
+    object-fit: cover;
+    background: #f0f4f7;
+    height: calc(100vh - 70px);
+    /* transform: rotateY(180deg); */
+    z-index: 10;
+}
+
+#local {
+    position: absolute;
+    z-index: 20;
+    bottom: 10px;
+    width: 300px;
+    right: 10px;
+    background: #ccc;
+    border-radius: 5px;
+    /* transform: rotateY(180deg); */
+}
