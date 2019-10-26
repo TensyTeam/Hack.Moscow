@@ -52,3 +52,45 @@ a {
     justify-content: space-between;
     align-items: center;
 }
+
+.title_group a {
+    display: flex;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    width: 60%;
+}
+
+.btn-file {
+    display: flex;
+    justify-content: center;
+}
+
+#task_cover_img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.btn-file:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.btn-file .fas {
+    margin-right: 10px;
+}
+
+.input-file {
+    width: .1px;
+    height: .1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1
+}

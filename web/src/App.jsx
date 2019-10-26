@@ -5,6 +5,7 @@ import {
 
 
 import Home from './Containers/Home.jsx';
+import EditTask from './Containers/EditTask.jsx';
 import Popup from './Containers/Popup.jsx';
 import Footer from './Components/Footer/Footer.jsx';
 
@@ -69,6 +70,18 @@ export default class App extends React.Component {
 						)}
 						<Route exact path="/">
 							<Home
+								onPopup={this.onPopup}
+								onRedirect={this.onRedirect}
+							/>
+						</Route>
+						<Route exact path="/task/edit">
+							<EditTask
+								onPopup={this.onPopup}
+								onRedirect={this.onRedirect}
+							/>
+						</Route>
+						<Route exact path="/create/task">
+							<EditTask
 								onPopup={this.onPopup}
 								onRedirect={this.onRedirect}
 							/>
