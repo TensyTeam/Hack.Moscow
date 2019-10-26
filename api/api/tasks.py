@@ -2,7 +2,7 @@ import time
 
 from mongodb import db
 from api._error import ErrorWrong, ErrorUpload, ErrorAccess, ErrorInvalid
-from api._func import check_params, next_id, get_preview
+from api._func import check_params, next_id, get_preview, load_image
 
 
 # Создание / редактирование
@@ -30,7 +30,7 @@ def edit(this, **x):
 
 	# Не авторизован
 
-	if this.user['admin'] < 5:
+	if this.user['admin'] < 3:
 		raise ErrorAccess('add / edit')
 
 	# Редактирование
@@ -88,7 +88,12 @@ def edit(this, **x):
 		if par in x:
 			query[par] = x[par]
 
-	db['ladders'].save(query)
+	db['tasks'].save(query)
+	
+	# Прикрепление задания к пользователю
+
+	this.user['tasks'].append(query['id'])
+	db['users'].save(this.user)
 	
 	# Ответ
 
@@ -113,6 +118,9 @@ def get(this, **x):
 
 	if 'my' not in x:
 		x['my'] = False
+
+	if x['my'] and this.user['admin'] < 3:
+		raise ErrorAccess('token')
 
 	# Условия
 

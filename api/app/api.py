@@ -37,10 +37,6 @@ def index():
 		req['error'] = 4
 		req['result'] = str(e)
 
-	except Error.ErrorBusy as e:
-		req['error'] = 5
-		req['result'] = str(e)
-
 	except Error.ErrorInvalid as e:
 		req['error'] = 6
 		req['result'] = str(e)
@@ -57,24 +53,8 @@ def index():
 		req['error'] = 9
 		req['result'] = str(e)
 
-	except Error.ErrorEmpty as e:
-		req['error'] = 10
-		req['result'] = str(e)
-
-	except Error.ErrorEnough as e:
-		req['error'] = 11
-		req['result'] = str(e)
-
-	except Error.ErrorBlock as e:
-		req['error'] = 12
-		req['result'] = str(e)
-
 	except Error.ErrorType as e:
 		req['error'] = 13
-		req['result'] = str(e)
-
-	except Error.ErrorCount as e:
-		req['error'] = 14
 		req['result'] = str(e)
 
 	# except Exception as e:
