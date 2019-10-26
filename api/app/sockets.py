@@ -5,6 +5,7 @@ import time
 import re
 
 from mongodb import db
+from api._func import get_preview
 
 # Socket.IO
 
@@ -27,19 +28,25 @@ def online(x):
 	user = db['users'].find_one({'token': x['token']})
 
 	if user:
+		# Добавление онлайн заданий
+
+		if not user['online']:
+			db_condition = {
+				'id': {'$in': user['tasks']},
+			}
+
+			tasks = [i for i in db['tasks'].find(db_condition, {'_id': False}) if i]
+
+			for i in range(len(tasks)):
+				tasks[i]['image'] = get_preview('tasks', tasks[i]['id'])
+
+			sio.emit('tasks_add', tasks, namespace='/main')
+
+		#
+
 		user['online'] = True
 		user['last'] = time.time()
 		db['users'].save(user)
-
-		# Добавление онлайн заданий
-
-		db_condition = {
-			'id': {'$in': user['tasks']},
-		}
-
-		tasks = [i for i in db['tasks'].find(db_condition, {'_id': False}) if i]
-
-		sio.emit('tasks_add', tasks, namespace='/main')
 
 
 if __name__ == '__main__':
@@ -56,7 +63,12 @@ def background_thread():
 
 		# Вышел из онлайна
 
-		for user in db['users'].find({'last': {'$lt': timestamp - 10}}):
+		db_condition = {
+			'last': {'$lt': timestamp - 10},
+			'online': True,
+		}
+
+		for user in db['users'].find(db_condition):
 			user['online'] = False
 			db['users'].save(user)
 
