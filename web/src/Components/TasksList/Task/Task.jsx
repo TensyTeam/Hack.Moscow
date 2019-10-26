@@ -7,10 +7,10 @@ import { dateFormat } from '../../../Functions/handle';
 
 const Task = (props) => {
 	const {
-		task,
+		task, onCallTask,
 	} = props;
 	return (
-		<Link to={`card/${task.id}`} className="task">
+		<Link to={`card/${task.id}`} className="task" key={task.id} onClick={() => { onCallTask(task.id); }}>
 			<div className="task_left">
 				<img src={task.image} alt="" />
 			</div>
@@ -19,7 +19,7 @@ const Task = (props) => {
 				<div className="task_date">{dateFormat(task.time * 1000)}</div>
 				<div className="task_tags">
 					{task.tags.map((tag) => (
-						<span className="tag">{tag}</span>
+						<span className="tag" key={tag}>{tag}</span>
 					))}
 				</div>
 				<div className="task_user">

@@ -26,4 +26,4 @@ export default function api(that, method, params = {}, handlerSuccess = () => {}
 }
 
 // online
-export const socketIo = openSocket('https://tensyteam.ru/api/main');
+export const socketIo = openSocket('https://tensyteam.ru/main');

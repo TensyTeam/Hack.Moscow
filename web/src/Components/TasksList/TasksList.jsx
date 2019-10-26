@@ -6,7 +6,7 @@ import './TasksList.css';
 
 const TasksList = (props) => {
 	const {
-		tasks,
+		tasks, onCallTask,
 	} = props;
 	return (
 		<div className="task_list">
@@ -14,6 +14,7 @@ const TasksList = (props) => {
 				<Task
 					key={task.id}
 					task={task}
+					onCallTask={onCallTask}
 				/>
 			))}
 		</div>

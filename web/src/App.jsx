@@ -25,17 +25,26 @@ export default class App extends React.Component {
 	}
 
 	componentWillMount() {
+		let tokenTemp;
 		if (localStorage.getItem('token') !== null) {
-			this.setState({ token: JSON.parse(localStorage.getItem('token')) });
+			tokenTemp = JSON.parse(localStorage.getItem('token'));
+			this.setState({ token: tokenTemp });
 		} else {
-			const token = '123';
-			localStorage.setItem('token', JSON.stringify(token));
+			tokenTemp = Math.random().toString(36).substring(2, 15);
+			localStorage.setItem('token', JSON.stringify(tokenTemp));
 		}
 
+		socketIo.emit('online', { tokenTemp });
 		setInterval(() => {
 			const { token } = this.state;
 			socketIo.emit('online', { token });
 		}, 5000);
+
+		socketIo.on('student_accept', (mes) => {
+			if (mes.token === JSON.parse(localStorage.getItem('token'))) {
+				this.onRedirect(`/space/${mes.id}/?type=student`);
+			}
+		});
 	}
 
 	onPopup(_active, _current) {

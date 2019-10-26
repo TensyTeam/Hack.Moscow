@@ -28,3 +28,17 @@ export function editTasks(that, data = {}) {
 		api(that, 'tasks.edit', data, handlerSuccess, handlerError);
 	});
 }
+
+export function startStudy(that, data) {
+    return new Promise((resolve) => {
+        const handlerSuccess = (other, res) => {
+            resolve(res);
+        };
+
+        const handlerError = (other, res) => {
+            resolve(res);
+        };
+
+        api(that, 'study.start', data, handlerSuccess, handlerError);
+    });
+}
