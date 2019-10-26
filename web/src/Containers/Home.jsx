@@ -26,20 +26,28 @@ class Home extends React.Component {
 		socketIo.on('tasks_add', (mes) => {
 			console.log('tasks_add', mes);
 			const { tasks } = this.state;
+			for (let m = 0; m < tasks.length; m += 1) {
+				for (let n = 0; n < mes.length; n += 1) {
+					if (tasks[m].id === mes[n].id) {
+						tasks.splice(m, 1);
+						// break;
+					}
+				}
+			}
 			this.setState({ tasks: tasks.concat(mes) });
 		});
 
 		socketIo.on('tasks_del', (mes) => {
 			console.log('tasks_del', mes);
 			const { tasks } = this.state;
-			// for (let m = 0; m < tasks.length; m += 1) {
-			// 	for (let n = 0; n < mes.length; n += 1) {
-			// 		if (tasks[m].id === mes[n].id) {
-			// 			tasks.splice(m, 1);
-			// 			break;
-			// 		}
-			// 	}
-			// }
+			for (let m = 0; m < tasks.length; m += 1) {
+				for (let n = 0; n < mes.length; n += 1) {
+					if (tasks[m].id === mes[n].id) {
+						tasks.splice(m, 1);
+						// break;
+					}
+				}
+			}
 			this.setState({ tasks });
 		});
 	}

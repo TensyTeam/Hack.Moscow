@@ -28,11 +28,24 @@ class EditTask extends React.Component {
 		} = newTask;
 		this.setState({ responce: true });
 		if (text.length !== 0 && tags.length !== 0) {
-			editTasks(this, {
-				image, file, text, tags,
-			}).then((res) => {
+			const arrayOutput = {
+				text, tags,
+			};
+			if (image.length !== 0) {
+				arrayOutput.image = image;
+				arrayOutput.file = file;
+			}
+			editTasks(this, arrayOutput).then((res) => {
 				this.setState({ responce: false });
 				if (res.error === 0) {
+					this.setState({
+						newTask: {
+							image: '',
+							file: '',
+							text: '',
+							tags: [],
+						},
+					});
 					onPopup(true, 'success');
 				}
 			});

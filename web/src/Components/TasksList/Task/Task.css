@@ -7,8 +7,13 @@
     margin: 10px 0;
 }
 
+.task_left {
+    display: flex;
+    align-items: center;
+}
+
 .task_left img {
-    width: 100px;
+    width: 300px;
     height: auto;
 }
 
