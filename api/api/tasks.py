@@ -148,6 +148,23 @@ def get(this, **x):
 
 	tasks = [i for i in db['tasks'].find(db_condition, db_filter) if i]
 
+	# Только онлайн
+
+	ind = 0
+	while ind < len(tasks):
+		db_filter = {
+			'_id': False,
+			'online': True,
+		}
+
+		user = db['users'].find_one({'token': tasks[ind]['user']}, db_filter)
+
+		if not user['online']:
+			del tasks[ind]
+			continue
+
+		ind += 1
+
 	# Количество
 
 	tasks = tasks[:count]

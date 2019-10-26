@@ -30,6 +30,8 @@ class API():
 					'token': token,
 					'tasks': [],
 					'admin': 3,
+					'online': True,
+					'last': self.timestamp,
 				}
 
 				db['users'].insert_one(self.user)
