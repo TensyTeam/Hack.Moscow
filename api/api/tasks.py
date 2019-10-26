@@ -44,6 +44,8 @@ def edit(this, **x):
 		# Чужое задание
 		if query['token'] != this.user['token']:
 			raise ErrorAccess('token')
+	
+		process_edit = True
 
 	# Создание
 	else:
@@ -64,6 +66,8 @@ def edit(this, **x):
 			'tags': x['tags'] if 'tags' in x else [],
 			'user': this.user['token'],
 		}
+
+		process_edit = False
 
 	# Загрузка картинки
 
@@ -94,7 +98,18 @@ def edit(this, **x):
 
 	this.user['tasks'].append(query['id'])
 	db['users'].save(this.user)
-	
+
+	# Обновление онлайн заданий
+
+	if not process_edit:
+		# ???
+		if '_id' in query:
+			del query['_id']
+
+		query['image'] = get_preview('tasks', query['id'])
+
+		this.socketio.emit('tasks_add', [query], namespace='/main')
+
 	# Ответ
 
 	res = {
