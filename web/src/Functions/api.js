@@ -1,7 +1,8 @@
 import axios from 'axios';
+import openSocket from 'socket.io-client';
 
 function serverRequest(json = {}) {
-    return axios.post('https://tensyteam.ru/api', json);
+    return axios.post('https://tensyteam.ru/api/', json);
 }
 
 function handlerResult(that, res, handlerSuccess, handlerError) {
@@ -19,7 +20,10 @@ export default function api(that, method, params = {}, handlerSuccess = () => {}
         params,
     };
 
-    json.token = JSON.parse(localStorage.getItem('user')).token;
+    json.token = JSON.parse(localStorage.getItem('token'));
     // console.log(json);
     serverRequest(json).then((res) => handlerResult(that, res.data, handlerSuccess, handlerError));
 }
+
+// online
+export const socketIo = openSocket('https://tensyteam.ru/api/main');
