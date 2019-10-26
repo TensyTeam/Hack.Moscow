@@ -309,4 +309,9 @@ a {
         display: flex;
         flex-direction: column;
     }
+
+    #local {
+        height: 200px;
+        width: 100px;
+    }
 }
