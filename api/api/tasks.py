@@ -143,10 +143,34 @@ def get(this, **x):
 
 	db_filter = {
 		'_id': False,
-		'token': False,
 	}
 
 	tasks = [i for i in db['tasks'].find(db_condition, db_filter) if i]
+
+	# Выборка
+
+	ind = 0
+	while ind < len(tasks):
+		# Только чужие
+
+		if not x['my'] and tasks[ind]['user'] == this.user['token']:
+			del tasks[ind]
+			continue
+
+		# Только онлайн
+
+		db_filter = {
+			'_id': False,
+			'online': True,
+		}
+
+		user = db['users'].find_one({'token': tasks[ind]['user']}, db_filter)
+
+		if not user['online']:
+			del tasks[ind]
+			continue
+
+		ind += 1
 
 	# Количество
 
