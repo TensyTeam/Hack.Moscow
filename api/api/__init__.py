@@ -3,7 +3,7 @@ import time
 
 from mongodb import db
 import api.tasks as tasks
-# import api.study as study
+import api.study as study
 import api._error as Error
 
 
