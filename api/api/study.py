@@ -57,7 +57,8 @@ def start(this, **x):
 
 	this.socketio.emit('student_accept', {
 		'id': space_id,
-	})
+		'user': task['user'],
+	}, namespace='/main')
 
 	# Ответ
 
