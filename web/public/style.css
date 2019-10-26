@@ -224,7 +224,7 @@ a {
     overflow-y: scroll;
     height: calc(100vh - 120px);
     width: calc(100% - 10px);
-    background: #fff;
+    background: #f5f6fa;
 }
 
 .chat_block {
@@ -278,4 +278,19 @@ a {
     color: #dbdbdb;
     margin: 0 5px;
     font-size: 12px;
+}
+
+@media (max-width: 700px) {
+    .chat_block {
+        width: 100vw;
+    }
+
+    .videochat_block {
+        width: 100vw;
+    }
+
+    #space {
+        display: flex;
+        flex-direction: column;
+    }
 }

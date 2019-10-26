@@ -211,6 +211,12 @@ class Space extends React.Component {
 		console.log(arrayMessages);
 		return (
 			<div id="space">
+				<div className="videochat_block" id="videochat">
+					<div id="videos">
+						<video id="local" autoPlay controls />
+						<video id="remote" autoPlay controls />
+					</div>
+				</div>
 				<div className="chat_block" id="chat">
 					<div className="chat_content">
 						{arrayMessages.length !== 0 && arrayMessages.map((message) => (
@@ -236,12 +242,6 @@ class Space extends React.Component {
 					<div className="chat_bottom">
 						<input type="text" id="message_field" onKeyPress={(event) => { this.handleKeyPress(event); }} />
 						<div className="btn" onClick={() => { this.onSendMessage(); }}>Send</div>
-					</div>
-				</div>
-				<div className="videochat_block" id="videochat">
-					<div id="videos">
-						<video id="local" autoPlay controls />
-						<video id="remote" autoPlay controls />
 					</div>
 				</div>
 			</div>
