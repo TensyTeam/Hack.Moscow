@@ -60,6 +60,23 @@ def start(this, **x):
 		'user': task['user'],
 	}, namespace='/main')
 
+	# Удалить онлайн задания
+
+	user = db['users'].find_one({'token': task['user']}, {'_id': False, 'tasks': True})
+
+	db_condition = {
+		'id': {'$in': this.user['tasks'] + user['tasks']},
+	}
+
+	db_filter = {
+		'_id': False,
+		'id': True,
+	}
+
+	tasks = [i for i in db['tasks'].find(db_condition, db_filter) if i]
+
+	this.socketio.emit('tasks_del', tasks, namespace='/main')
+
 	# Ответ
 
 	res = {
