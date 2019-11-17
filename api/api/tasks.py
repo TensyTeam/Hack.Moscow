@@ -217,7 +217,10 @@ def delete(this, **x):
 
 	task = db['tasks'].find_one({'id': x['id']})
 
-	if this.user['admin'] < 3 or task['token'] != this.user['token']:
+	if not task:
+		raise ErrorWrong('id')
+
+	if this.user['admin'] < 3 or task['user'] != this.user['token']:
 		raise ErrorAccess('token')
 
 	db['tasks'].delete_one(task)
